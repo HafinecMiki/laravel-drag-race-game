@@ -63,7 +63,9 @@
                     </table>
                     <div class="d-flex align-items-center justify-content-around">
                         <a href="{{ route('car-edit-page', $car->id) }}">
-                            <button class="btn btn-primary px-4">Edit</button>
+                            <x-primary-button>
+                                {{ __('Edit') }}
+                            </x-primary-button>
                         </a>
                         <!-- Button trigger modal -->
                         <x-danger-button
