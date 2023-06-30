@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RouterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,12 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::get('/', [RouterController::class, 'showCars'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+Route::get('/car-details/{car}', [RouterController::class, 'showCarDetails'])->name('car-details');
+Route::get('/add-or-edit-car', [RouterController::class, 'showCarCreate'])->name('car-create-page');
+Route::get('/add-or-edit-car/{car}', [RouterController::class, 'showCarEdit'])->name('car-edit-page');

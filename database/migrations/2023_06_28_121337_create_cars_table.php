@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('brand');
             $table->string('type');
-            $table->integer('weight')->nullable();
-            $table->integer('performance')->nullable();
-            $table->timestamp('production_time')->nullable();
+            $table->integer('weight');
+            $table->integer('performance');
+            $table->date('production_date');
             $table->timestamps();
         });
     }
