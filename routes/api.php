@@ -19,4 +19,7 @@ Route::prefix('v1')->group(function () {
     Route::post('/car-create',  [CarsController::class, 'store'])->name('car-create');
     Route::put('/car/{car}',    [CarsController::class, 'update'])->name('car-edit');
     Route::delete('/car/{car}', [CarsController::class, 'destroy'])->name('car-delete');
+
+    //image
+    Route::post('/upload-image/{car}',[CarsController::class, 'storeImage'])->name('car-image-upload');
 });

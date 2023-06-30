@@ -27,7 +27,8 @@ class Car extends Model
         'type',
         'weight',
         'performance',
-        'production_date'
+        'production_date',
+        'image'
     ];
 
     /**

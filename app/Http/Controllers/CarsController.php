@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CarCreateRequest;
+use App\Http\Requests\CarImageUploadRequest;
 use App\Http\Requests\CarUpdateRequest;
 use App\Http\Requests\RaceRequest;
 use App\Models\Car;
@@ -44,9 +45,9 @@ class CarsController extends Controller
 
     public function store(CarCreateRequest $request): RedirectResponse
     {
-        Car::create($request->validated());
+        $car = Car::create($request->validated());
 
-        return back()->with('success', 'Create car successfully');
+        return redirect(route('car-edit-page', $car->id))->with('success', 'Create car successfully');
 
     }
 
@@ -79,5 +80,30 @@ class CarsController extends Controller
         $car->delete();
 
         return redirect('/');
+    }
+
+    /**
+     * car image upload
+     *
+     * @param Car $car
+     * @param CarImageUploadRequest $request
+     * @return RedirectResponse
+     */
+    public function storeImage(Car $car, CarImageUploadRequest $request): RedirectResponse
+    {
+        $data = $request->validated();
+
+        $imageName = time().'.'.$data['image']->extension();
+
+        // Public Folder
+        $data['image']->move(public_path('images'), $imageName);
+
+        //save
+        $car->update([
+            'image' => $imageName,
+        ]);
+
+        return back()->with('success', 'Image uploaded Successfully!')
+            ->with('image', $imageName);
     }
 }

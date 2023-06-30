@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
     <!-- Modal -->
-    <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
+    <x-modal name="confirm-user-deletion" focusable>
         <form method="post" action="{{ route('car-delete', $car->id) }}" class="p-6">
             @csrf
             @method('delete')
@@ -30,6 +30,11 @@
         <div class="col-sm-6 px-4 py-4">
             <div class="card">
                 <div class="card-body">
+                    @if (request('car') && $car->image)
+                        <div class="d-flex justify-center">
+                            <img src="{{ asset('images/' . $car->image) }}" class="p-2"/>
+                        </div>
+                    @endif
                     <table class="table table-striped table-light">
                         <tbody>
                         <tr>

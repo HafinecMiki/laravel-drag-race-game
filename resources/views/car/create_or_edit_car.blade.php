@@ -26,6 +26,27 @@
                             </ul>
                         </div>
                     @endif
+
+                    <!-- Image -->
+                    @if (request('car') && !$car->image)
+                        <div id="image-upload-part" class="p-2 border text-center">
+                            <h1 class="text-center">Image Upload</h1>
+
+                            <form method="POST" action="{{ route('car-image-upload', $car->id) }}"
+                                  enctype="multipart/form-data">
+                                @csrf
+                                <x-text-input type="file" class="form-control my-4" name="image"/>
+
+                                <x-primary-button type="submit" class="btn btn-sm">{{ __('Upload') }}</x-primary-button>
+                            </form>
+
+                        </div>
+                    @elseif (request('car') && $car->image)
+                        <div class="d-flex justify-center">
+                            <img src="{{ asset('images/' . $car->image) }}" class="p-2"/>
+                        </div>
+                    @endif
+                    <!-- Data -->
                     <form
                         action="{{ request('car') ? route('car-edit', $car->id) : route('car-create') }}"
                         method="POST">

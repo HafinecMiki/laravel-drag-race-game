@@ -5,14 +5,44 @@
         </h2>
     </x-slot>
 
+    <!-- Modal -->
+    @if (Session::has('winner'))
+    <x-modal name="confirm-user-deletion" :show="Session::has('winner')" focusable>
+        <div class="p-2">
+            <h2 class="text-lg font-medium text-gray-900 p-2">
+                {{ __('Winner car details')}}
+            </h2>
+            <table class="table table-striped table-light">
+                <tbody>
+                <tr>
+                    <td>Brand</td>
+                    <td class="word-break">{{ Session::get('winner')->brand }}</td>
+                </tr>
+                <tr>
+                    <td>Type</td>
+                    <td class="word-break">{{ Session::get('winner')->type }}</td>
+                </tr>
+                <tr>
+                    <td>Weight</td>
+                    <td class="word-break">{{ Session::get('winner')->weight }}</td>
+                </tr>
+                <tr>
+                    <td>Performance</td>
+                    <td class="word-break">{{ Session::get('winner')->performance }}</td>
+                </tr>
+                <tr>
+                    <td>Production date</td>
+                    <td class="word-break">{{ date('Y-m-d', strtotime(Session::get('winner')->production_date)) }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </x-modal>
+    @endif
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                @if (Session::has('winner'))
-                    <div class="alert alert-success" role="alert">
-                        The winner is {{ Session::get('winner')->brand }}
-                    </div>
-                @endif
                 <div class="d-flex justify-end sm:p-4 p-2">
                     <a href="{{ route('car-create-page') }}">
                         <x-primary-button>
