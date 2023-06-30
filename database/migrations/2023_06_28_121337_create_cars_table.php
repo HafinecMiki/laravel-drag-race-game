@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('performance');
             $table->date('production_date');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

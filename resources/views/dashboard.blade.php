@@ -13,47 +13,61 @@
                         The winner is {{ Session::get('winner')->brand }}
                     </div>
                 @endif
+                <div class="d-flex justify-end sm:p-4 p-2">
+                    <a href="{{ route('car-create-page') }}">
+                        <x-primary-button>
+                            {{ __('Add new car') }}
+                        </x-primary-button>
+                    </a>
+                </div>
                 <form action="{{ route('start-race') }}" method="POST">
                     <table class="table">
                         <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Brand</th>
-                                <th scope="col">Type</th>
-                                <th scope="col">Weight</th>
-                                <th scope="col">Performance</th>
-                                <th scope="col">Production date</th>
-                            </tr>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Brand</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Weight</th>
+                            <th scope="col">Performance</th>
+                            <th scope="col">Production date</th>
+                            <th scope="col" />
+                        </tr>
                         </thead>
                         <tbody>
-                            @foreach ($cars as $car)
-                                <tr>
-                                    <td><input type="checkbox" name="ids[]" value="{{ $car->id }}" /></td>
-                                    <td>{{ $car->brand }}</td>
-                                    <td>{{ $car->type }}</td>
-                                    <td>{{ $car->weight }}</td>
-                                    <td>{{ $car->performance }}</td>
-                                    <td>{{ date('Y-m-d', strtotime($car->production_date)) }}</td>
-                                    <td class="companies-header-td d-flex justify-content-center">
-                                        <a href="{{ route('car-details', $car->id) }}">
-
-                                                Details
-                                                <i class='far fa-paper-plane'></i>
-
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach
+                        @foreach ($cars as $car)
+                            <tr>
+                                <td><input type="checkbox" name="ids[]" value="{{ intval($car->id) }}"/></td>
+                                <td>{{ $car->brand }}</td>
+                                <td>{{ $car->type }}</td>
+                                <td>{{ $car->weight }}</td>
+                                <td>{{ $car->performance }}</td>
+                                <td>{{ date('Y-m-d', strtotime($car->production_date)) }}</td>
+                                <td class="companies-header-td d-flex justify-content-center">
+                                    <a href="{{ route('car-details', $car->id) }}" class="d-flex">
+                                        Details
+                                        <img src="{{ asset('image/paper-plane-solid.svg') }}"
+                                             width="15"
+                                             height="15"
+                                             class="ml-2"
+                                             alt="paper plane"/>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
-                    @if (Session::has('error'))
+                    @if ($errors->any())
                         <div class="alert alert-danger" role="alert">
-                            {{ Session::get('error') }}
+                            <ul class="list-unstyled m-0">
+                                @foreach ($errors->all() as $error)
+                                    <li> {{ $error }} </li>
+                                @endforeach
+                            </ul>
                         </div>
                     @endif
-                    <div class="mb-3">
-                        <div class="d-grid">
-                            <button class="btn btn-primary" type="submit">Start Race</button>
+                    <div class="mb-3 d-flex justify-center">
+                        <div>
+                            <x-primary-button type="submit">{{ __('Start Race') }}</x-primary-button>
                         </div>
                     </div>
                 </form>

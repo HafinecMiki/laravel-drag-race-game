@@ -18,5 +18,5 @@ Route::prefix('v1')->group(function () {
     Route::post('/start-race',  [CarsController::class, 'startRace'])->name('start-race');
     Route::post('/car-create',  [CarsController::class, 'store'])->name('car-create');
     Route::put('/car/{car}',    [CarsController::class, 'update'])->name('car-edit');
-    Route::delete('/car/{car}', [CarsController::class, 'delete'])->name('car-delete');
+    Route::delete('/car/{car}', [CarsController::class, 'destroy'])->name('car-delete');
 });

@@ -1,4 +1,10 @@
 <x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __(request('car') ? 'Edit Car' : 'Add New Car') }}
+        </h2>
+    </x-slot>
+    <!-- Edit or Add part -->
     <div class="row mx-0 justify-content-center mt-sm-0 mt-3">
         <div class="col-sm-6 px-4 py-4">
             <div class="card">
@@ -26,50 +32,51 @@
                         @csrf
                         {{ request('car') ? method_field('PUT') : method_field('POST') }}
                         <div class="mb-3">
-                            <x-input-label for="brand" :value="__('Brand')" />
+                            <x-input-label for="brand" :value="__('Brand')"/>
                             <x-text-input name="brand"
                                           class="form-control"
                                           id="brand"
                                           placeholder="Toyota"
                                           value="{{ request('car') ? $car->brand : '' }}"
-                                          required />
+                                          required/>
                         </div>
                         <div class="mb-3">
-                            <x-input-label for="name" :value="__('Type')" />
+                            <x-input-label for="name" :value="__('Type')"/>
                             <x-text-input name="type"
                                           class="form-control"
                                           id="type"
                                           placeholder="Supra"
                                           value="{{ request('car') ? $car->type : '' }}"
-                                          required />
+                                          required/>
                         </div>
                         <div class="mb-3">
-                            <x-input-label for="name" :value="__('Weight')" />
+                            <x-input-label for="name" :value="__('Weight')"/>
                             <x-text-input name="weight"
                                           class="form-control"
                                           id="weight"
                                           placeholder="800"
                                           value="{{ request('car') ? $car->weight : '' }}"
-                                          required />
+                                          required/>
                         </div>
                         <div class="mb-3">
-                            <x-input-label for="name" :value="__('Performance')" />
+                            <x-input-label for="name" :value="__('Performance')"/>
                             <x-text-input name="performance"
                                           class="form-control"
                                           id="performance"
                                           placeholder="1000"
                                           value="{{ request('car') ? $car->performance : '' }}"
-                                          required />
+                                          required/>
                         </div>
                         <div class="mb-3">
-                            <x-input-label for="production_date" :value="__('Production date')" />
+                            <x-input-label for="production_date" :value="__('Production date')"/>
                             <x-text-input type="date"
                                           id="production_date"
                                           class="form-control"
                                           name="production_date"
-                                          required
-                                          value="{{date('Y-m-d', strtotime($car->production_date))}}"
-                                          required />
+                                          max="{{ date('Y-m-d') }}"
+                                          min="1940-01-01"
+                                          value="{{request('car') ? date('Y-m-d', strtotime($car->production_date)) : ''}}"
+                                          required/>
                         </div>
                         <div class="mb-3">
                             <div class="d-grid">

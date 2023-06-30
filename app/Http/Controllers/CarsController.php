@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CarCreateRequest;
 use App\Http\Requests\CarUpdateRequest;
+use App\Http\Requests\RaceRequest;
 use App\Models\Car;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -11,19 +12,18 @@ use Illuminate\Http\Request;
 class CarsController extends Controller
 {
     /**
-     * @param Request $request
+     * @param RaceRequest $request
      * @return RedirectResponse
      */
-    public function startRace(Request $request): RedirectResponse
+    public function startRace(RaceRequest $request): RedirectResponse
     {
-        if (!$request->ids || count($request->ids) < 2 || count($request->ids) > 3) {
-            return back()->with('error', 'Failed selected cars! Please select minimum 2, maximum 3 cars.');
-        }
+        $data = $request->validated();
 
+        // winners data
         $winnerCar = null;
         $maximum = 0;
 
-        foreach ($request->ids as $id) {
+        foreach ($data['ids'] as $id) {
             $car = Car::find($id);
 
             if (($car->performance / $car->weight) > $maximum) {
@@ -46,7 +46,7 @@ class CarsController extends Controller
     {
         Car::create($request->validated());
 
-        return back()->with('success', 'Create company successfully');
+        return back()->with('success', 'Create car successfully');
 
     }
 
