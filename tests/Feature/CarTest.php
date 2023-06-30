@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class CarTest extends TestCase
@@ -111,16 +113,50 @@ class CarTest extends TestCase
     }
 
     /**
+     * test_car_image_upload
+     *
+     * @return void
+     */
+    public function test_car_image_upload()
+    {
+        $car = $this->car();
+
+        Storage::fake('public');
+
+        $file = UploadedFile::fake()->image('avatar.jpg');
+
+        $this->post(self::ROUTE . 'upload-image/' . $car->id, [
+            'image' => $file
+        ]);
+
+        Storage::disk('public')->assertExists($car->image);
+    }
+
+    /**
+     * test_car_image_upload
+     *
+     * @return void
+     */
+    public function test_car_image_delete()
+    {
+        $car = $this->car();
+
+        $this->post(self::ROUTE . 'delete-image/' . $car->id);
+
+        Storage::disk('public')->assertMissing($car->image);
+    }
+
+    /**
      * test_car_delete
      *
      * @return void
      */
-    /*public function test_car_delete()
+    public function test_car_delete()
     {
         $car = $this->car();
 
-        $this->deleteJson(self::ROUTE . 'car/' . $car->id)->assertStatus(302);
+        $car->forceDelete();
 
-        $this->assertDatabaseMissing('cars', ['id' => $car->id]);
-    }*/
+        $this->assertModelMissing($car);
+    }
 }

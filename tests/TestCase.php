@@ -18,6 +18,6 @@ abstract class TestCase extends BaseTestCase
      */
     protected function car(): Car
     {
-        return Car::factory()->create();
+        return Car::latest('id')->first();
     }
 }
