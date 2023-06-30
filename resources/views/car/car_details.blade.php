@@ -34,7 +34,7 @@
                         <div class="d-flex justify-center">
                             <img
                                 src="{{ $car->image ? asset('storage/' . $car->image) : asset('image/no-photo-car.jpg') }}"
-                                class="p-2"/>
+                                class="p-2" style="max-height: 200px !important;"/>
                         </div>
                     @endif
                     <table class="table table-striped table-light">

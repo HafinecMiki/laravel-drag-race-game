@@ -15,7 +15,7 @@
                 <div class="d-flex justify-center">
                     <img
                         src="{{ Session::get('winner')->image ? asset('storage/'. Session::get('winner')->image) : asset('image/no-photo-car.jpg') }}"
-                        class="p-2"/>
+                        class="p-2" style="max-height: 200px !important;"/>
                 </div>
                 <table class="table table-striped table-light">
                     <tbody>
@@ -85,7 +85,7 @@
                                 <td>
                                     <img
                                         src="{{ $car->image ? asset('storage/'. $car->image) : asset('image/no-photo-car.jpg') }}"
-                                        alt="" width="100" height="100"/>
+                                        alt="image" style="max-height: 20px !important; max-width: 80px"/>
                                 </td>
                                 <td>{{ $car->brand }}</td>
                                 <td>{{ $car->type }}</td>

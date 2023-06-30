@@ -42,7 +42,9 @@
                         </div>
                     @elseif (request('car') && $car->image)
                         <div>
-                            <img src="{{ asset('storage/' . $car->image) }}" class="p-2"/>
+                            <div class="d-flex justify-center">
+                                <img src="{{ asset('storage/' . $car->image) }}" class="p-2" style="max-height: 200px !important;"/>
+                            </div>
                             <form method="POST" action="{{ route('car-image-delete', $car->id) }}" class="d-flex justify-center">
                                 @csrf
                                 @method('DELETE')
