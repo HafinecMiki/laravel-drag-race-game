@@ -9,6 +9,7 @@ use App\Http\Requests\RaceRequest;
 use App\Models\Car;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CarsController extends Controller
 {
@@ -117,8 +118,7 @@ class CarsController extends Controller
         $imageName = time() . '.' . $data['image']->extension();
 
         // Public Folder
-        $data['image']->move(public_path('images'), $imageName);
-
+        Storage::disk('public')->put($imageName, file_get_contents($data['image']));
         //save
         $car->update([
             'image' => $imageName,
@@ -126,5 +126,24 @@ class CarsController extends Controller
 
         return back()->with('success', 'Image uploaded Successfully!')
             ->with('image', $imageName);
+    }
+
+    /**
+     * car image remove
+     *
+     * @param Car $car
+     * @return RedirectResponse
+     */
+    public function deleteImage(Car $car): RedirectResponse
+    {
+        if(Storage::disk('public')->exists($car->image)) {
+            Storage::disk('public')->delete($car->image);
+        }
+
+        $car->update([
+            'image' => null,
+        ]);
+
+        return back()->with('success', 'Image removed Successfully!');
     }
 }

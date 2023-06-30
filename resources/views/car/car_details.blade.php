@@ -33,7 +33,7 @@
                     @if (request('car'))
                         <div class="d-flex justify-center">
                             <img
-                                src="{{ $car->image ? asset('images/' . $car->image) : asset('image/no-photo-car.jpg') }}"
+                                src="{{ $car->image ? asset('storage/' . $car->image) : asset('image/no-photo-car.jpg') }}"
                                 class="p-2"/>
                         </div>
                     @endif

@@ -14,7 +14,7 @@
                 </h1>
                 <div class="d-flex justify-center">
                     <img
-                        src="{{ Session::get('winner')->image ? asset('images/'. Session::get('winner')->image) : asset('image/no-photo-car.jpg') }}"
+                        src="{{ Session::get('winner')->image ? asset('storage/'. Session::get('winner')->image) : asset('image/no-photo-car.jpg') }}"
                         class="p-2"/>
                 </div>
                 <table class="table table-striped table-light">
@@ -84,7 +84,7 @@
                                 <td><input type="checkbox" name="ids[]" value="{{ intval($car->id) }}"/></td>
                                 <td>
                                     <img
-                                        src="{{ $car->image ? asset('images/'. $car->image) : asset('image/no-photo-car.jpg') }}"
+                                        src="{{ $car->image ? asset('storage/'. $car->image) : asset('image/no-photo-car.jpg') }}"
                                         alt="" width="100" height="100"/>
                                 </td>
                                 <td>{{ $car->brand }}</td>

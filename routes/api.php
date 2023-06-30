@@ -22,4 +22,5 @@ Route::prefix('v1')->group(function () {
 
     //image
     Route::post('/upload-image/{car}',[CarsController::class, 'storeImage'])->name('car-image-upload');
+    Route::delete('/delete-image/{car}',[CarsController::class, 'deleteImage'])->name('car-image-delete');
 });

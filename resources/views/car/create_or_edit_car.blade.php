@@ -41,8 +41,15 @@
 
                         </div>
                     @elseif (request('car') && $car->image)
-                        <div class="d-flex justify-center">
-                            <img src="{{ asset('images/' . $car->image) }}" class="p-2"/>
+                        <div>
+                            <img src="{{ asset('storage/' . $car->image) }}" class="p-2"/>
+                            <form method="POST" action="{{ route('car-image-delete', $car->id) }}" class="d-flex justify-center">
+                                @csrf
+                                @method('DELETE')
+                                <x-danger-button type="submit" class="btn btn-sm">
+                                    {{ __('Delete Image') }}
+                                </x-danger-button>
+                            </form>
                         </div>
                     @endif
                     <!-- Data -->
