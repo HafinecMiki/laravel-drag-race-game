@@ -8,15 +8,14 @@
     <div class="row mx-0 justify-content-center mt-sm-0 mt-3">
         <div class="col-sm-6 px-4 py-4">
             <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">{{ request('car') ? 'Edit' : 'Add new' }} car</h3>
-                </div>
                 <div class="card-body">
+                    <!-- Success message -->
                     @if (Session::has('success'))
                         <div class="alert alert-success" role="alert">
                             {{ Session::get('success') }}
                         </div>
                     @endif
+                    <!-- Error message -->
                     @if ($errors->any())
                         <div class="alert alert-danger" role="alert">
                             <ul class="list-unstyled m-0">
@@ -75,7 +74,7 @@
                             <x-text-input name="weight"
                                           class="form-control"
                                           id="weight"
-                                          placeholder="800"
+                                          placeholder="800 kg"
                                           value="{{ request('car') ? $car->weight : '' }}"
                                           required/>
                         </div>
@@ -84,7 +83,7 @@
                             <x-text-input name="performance"
                                           class="form-control"
                                           id="performance"
-                                          placeholder="1000"
+                                          placeholder="1000 Le"
                                           value="{{ request('car') ? $car->performance : '' }}"
                                           required/>
                         </div>

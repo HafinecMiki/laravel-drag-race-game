@@ -23,16 +23,37 @@ class CarsController extends Controller
         // winners data
         $winnerCar = null;
         $maximum = 0;
+        // draw race car ids
+        $drawRaceIds = array();
 
         foreach ($data['ids'] as $id) {
             $car = Car::find($id);
-
+            // search maximum
             if (($car->performance / $car->weight) > $maximum) {
                 $maximum = ($car->performance / $car->weight);
                 $winnerCar = $car;
+            } else if (($car->performance / $car->weight) === $maximum) {
+                // if the cars performance / weight is equal
+                if ($car->production_date > $winnerCar->production_date) {
+                    // if the production date is bigger than the winner car
+                    $winnerCar = $car;
+                } else if ($car->production_date == $winnerCar->production_date) {
+                    // if equal production date
+                    $drawRaceIds[] = $car->id;
+                    if (!in_array($winnerCar->id, $drawRaceIds)) {
+                        $drawRaceIds[] = $winnerCar->id;
+                    }
+                }
             }
         }
 
+        // check drawing race
+        if (in_array($winnerCar->id, $drawRaceIds)) {
+            $drawRaceNames = Car::whereIn('id', $drawRaceIds)->select('brand', 'type')->get();
+            return back()->with('draw', $drawRaceNames);
+        }
+
+        // return winner car
         return back()->with('winner', $winnerCar);
     }
 
@@ -93,7 +114,7 @@ class CarsController extends Controller
     {
         $data = $request->validated();
 
-        $imageName = time().'.'.$data['image']->extension();
+        $imageName = time() . '.' . $data['image']->extension();
 
         // Public Folder
         $data['image']->move(public_path('images'), $imageName);

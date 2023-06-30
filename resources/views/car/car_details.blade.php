@@ -30,9 +30,11 @@
         <div class="col-sm-6 px-4 py-4">
             <div class="card">
                 <div class="card-body">
-                    @if (request('car') && $car->image)
+                    @if (request('car'))
                         <div class="d-flex justify-center">
-                            <img src="{{ asset('images/' . $car->image) }}" class="p-2"/>
+                            <img
+                                src="{{ $car->image ? asset('images/' . $car->image) : asset('image/no-photo-car.jpg') }}"
+                                class="p-2"/>
                         </div>
                     @endif
                     <table class="table table-striped table-light">
@@ -47,11 +49,11 @@
                         </tr>
                         <tr>
                             <td>Weight</td>
-                            <td class="word-break">{{ $car->weight }}</td>
+                            <td class="word-break">{{ $car->weight }} kg</td>
                         </tr>
                         <tr>
                             <td>Performance</td>
-                            <td class="word-break">{{ $car->performance }}</td>
+                            <td class="word-break">{{ $car->performance }} Le</td>
                         </tr>
                         <tr>
                             <td>Production date</td>

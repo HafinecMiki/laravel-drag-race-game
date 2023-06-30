@@ -5,39 +5,53 @@
         </h2>
     </x-slot>
 
-    <!-- Modal -->
+    <!-- Modal Win Race -->
     @if (Session::has('winner'))
-    <x-modal name="confirm-user-deletion" :show="Session::has('winner')" focusable>
-        <div class="p-2">
-            <h2 class="text-lg font-medium text-gray-900 p-2">
-                {{ __('Winner car details')}}
-            </h2>
-            <table class="table table-striped table-light">
-                <tbody>
-                <tr>
-                    <td>Brand</td>
-                    <td class="word-break">{{ Session::get('winner')->brand }}</td>
-                </tr>
-                <tr>
-                    <td>Type</td>
-                    <td class="word-break">{{ Session::get('winner')->type }}</td>
-                </tr>
-                <tr>
-                    <td>Weight</td>
-                    <td class="word-break">{{ Session::get('winner')->weight }}</td>
-                </tr>
-                <tr>
-                    <td>Performance</td>
-                    <td class="word-break">{{ Session::get('winner')->performance }}</td>
-                </tr>
-                <tr>
-                    <td>Production date</td>
-                    <td class="word-break">{{ date('Y-m-d', strtotime(Session::get('winner')->production_date)) }}</td>
-                </tr>
-                </tbody>
-            </table>
+        <x-modal name="confirm-user-deletion" :show="Session::has('winner')" focusable>
+            <div class="p-2">
+                <h1 class="text-xl font-medium text-gray-900 p-2">
+                    {{ __('Winner car details')}}
+                </h1>
+                <div class="d-flex justify-center">
+                    <img
+                        src="{{ Session::get('winner')->image ? asset('images/'. Session::get('winner')->image) : asset('image/no-photo-car.jpg') }}"
+                        class="p-2"/>
+                </div>
+                <table class="table table-striped table-light">
+                    <tbody>
+                    <tr>
+                        <td>Brand</td>
+                        <td class="word-break">{{ Session::get('winner')->brand }}</td>
+                    </tr>
+                    <tr>
+                        <td>Type</td>
+                        <td class="word-break">{{ Session::get('winner')->type }}</td>
+                    </tr>
+                    <tr>
+                        <td>Weight</td>
+                        <td class="word-break">{{ Session::get('winner')->weight }}</td>
+                    </tr>
+                    <tr>
+                        <td>Performance</td>
+                        <td class="word-break">{{ Session::get('winner')->performance }}</td>
+                    </tr>
+                    <tr>
+                        <td>Production date</td>
+                        <td class="word-break">{{ date('Y-m-d', strtotime(Session::get('winner')->production_date)) }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </x-modal>
+    @endif
+    <!-- Draw race -->
+    @if (Session::has('draw'))
+        <div class="alert alert-success" role="alert">
+            Draw race! Winners
+            @foreach (Session::get('draw') as $car)
+                , {{ $car->brand . ' ' . $car->type }}
+            @endforeach .
         </div>
-    </x-modal>
     @endif
 
     <div class="py-12">
@@ -55,24 +69,30 @@
                         <thead>
                         <tr>
                             <th scope="col">#</th>
+                            <th scope="col">Image</th>
                             <th scope="col">Brand</th>
                             <th scope="col">Type</th>
                             <th scope="col">Weight</th>
                             <th scope="col">Performance</th>
                             <th scope="col">Production date</th>
-                            <th scope="col" />
+                            <th scope="col"/>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach ($cars as $car)
                             <tr>
                                 <td><input type="checkbox" name="ids[]" value="{{ intval($car->id) }}"/></td>
+                                <td>
+                                    <img
+                                        src="{{ $car->image ? asset('images/'. $car->image) : asset('image/no-photo-car.jpg') }}"
+                                        alt="" width="100" height="100"/>
+                                </td>
                                 <td>{{ $car->brand }}</td>
                                 <td>{{ $car->type }}</td>
-                                <td>{{ $car->weight }}</td>
-                                <td>{{ $car->performance }}</td>
+                                <td>{{ $car->weight }} kg</td>
+                                <td>{{ $car->performance }} Le</td>
                                 <td>{{ date('Y-m-d', strtotime($car->production_date)) }}</td>
-                                <td class="companies-header-td d-flex justify-content-center">
+                                <td class="align-middle">
                                     <a href="{{ route('car-details', $car->id) }}" class="d-flex">
                                         Details
                                         <img src="{{ asset('image/paper-plane-solid.svg') }}"
@@ -81,6 +101,7 @@
                                              class="ml-2"
                                              alt="paper plane"/>
                                     </a>
+
                                 </td>
                             </tr>
                         @endforeach
