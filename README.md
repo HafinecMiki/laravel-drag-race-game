@@ -21,6 +21,10 @@ Please open terminal in project folder and put command:
 
 ```php artisan serve```
 
+Please open terminal in project folder and put command:
+
+```npm run dev```
+
 Tests:
 
 ```php artisan test```

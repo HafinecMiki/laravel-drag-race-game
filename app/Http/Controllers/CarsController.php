@@ -99,6 +99,12 @@ class CarsController extends Controller
      */
     public function destroy(Car $car): RedirectResponse
     {
+        if($car->image) {
+            if(Storage::disk('public')->exists($car->image)) {
+                Storage::disk('public')->delete($car->image);
+            }
+        }
+
         $car->delete();
 
         return redirect('/');
